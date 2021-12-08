@@ -1,13 +1,7 @@
 public class Main {
     public static void main(String[] args) {
-        Animal animal = new Animal("Kot");
-        animal.takeForAWalk();
-        animal.feed();
-        animal.takeForAWalk();
-        animal.takeForAWalk();
-        animal.takeForAWalk();
-        animal.takeForAWalk();
-        animal.feed();
-        animal.takeForAWalk();
+        Human human = new Human();
+        Car car = new Car("Skoda", "Octavia", "1J8FFC7Y77D356964", 2000);
+        human.car = car;
     }
 }
