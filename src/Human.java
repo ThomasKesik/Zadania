@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Human {
     public Animal pet;
-    public Car car;
+    private Car car;
     private Double salary = 0.0;
     private String lastSalaryText = "";
 
@@ -34,6 +34,21 @@ public class Human {
             System.out.println("ZUS i US wiedzą o wysokości twojej wypłaty nie ukrywaj jej !!! ");
             this.salary = salary;
         }
+    }
 
+    public Car getCar(){
+        return this.car;
+    }
+
+    public void setCar(Car car){
+        if(salary > car.value){
+            System.out.println("Twoje zarobki są wyższe niż wartość auta kupisz je za gotówkę");
+            this.car = car;
+        } else if(salary > (car.value/12)){
+            System.out.println("Uda ci się kupić auto na kredyt (no trudno)");
+            this.car = car;
+        } else {
+            System.out.println("Zapisz się na studia i znajdź nową robotę albo idź po podwyżkę");
+        }
     }
 }

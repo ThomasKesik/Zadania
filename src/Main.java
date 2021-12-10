@@ -2,14 +2,13 @@ public class Main {
     public static void main(String[] args) {
         Human human = new Human();
         Car car = new Car("Skoda", "Octavia", "1J8FFC7Y77D356964", 2000);
-        human.car = car;
+        car.value = 100.0;
+        human.setCar(car);
 
-        human.setSalary(-100.0);
-        human.getSalary();
-        human.getSalary();
-        human.setSalary(251.0);
-        Double salary = human.getSalary();
-        System.out.println(salary);
+        human.setSalary(50.0);
+        human.setCar(car);
 
+        human.setSalary(200.0);
+        human.setCar(car);
     }
 }

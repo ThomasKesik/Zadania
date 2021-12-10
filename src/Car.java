@@ -4,6 +4,7 @@ public class Car {
     public final String model;
     public final String VIN;
     public final Integer productionYear;
+    public Double value;
 
 
     public Car(String producer, String model, String VIN, Integer productionYear) {
