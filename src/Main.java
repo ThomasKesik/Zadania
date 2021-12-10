@@ -28,7 +28,7 @@ public class Main {
         human.setCar(car1);
         System.out.println(human);
 
-        Phone phone = new Phone();
+        Phone phone = new Phone("Samsung", "A20", 2015);
         System.out.println(phone);
     }
 }
