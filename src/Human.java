@@ -1,3 +1,5 @@
+import devices.Car;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -50,5 +52,15 @@ public class Human {
         } else {
             System.out.println("Zapisz się na studia i znajdź nową robotę albo idź po podwyżkę");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Human{" +
+                "pet=" + pet +
+                ", car=" + car +
+                ", salary=" + salary +
+                ", lastSalaryText='" + lastSalaryText + '\'' +
+                '}';
     }
 }
