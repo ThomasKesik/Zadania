@@ -1,5 +1,6 @@
 package main;
 
+import creatures.Animal;
 import devices.Car;
 import devices.Phone;
 

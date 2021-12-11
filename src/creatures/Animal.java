@@ -1,8 +1,9 @@
-package main;
+package creatures;
 
 import interfaces.salable;
+import main.Human;
 
-public class Animal implements salable{
+public abstract class Animal implements salable, Feedable{
     public final String species;
     private Double weight;
 
@@ -17,6 +18,7 @@ public class Animal implements salable{
         }
     }
 
+    @Override
     public void feed(){
         if(weight == 0){
             System.out.println("Nie można karmić zwierzęcia które nie żyje");
@@ -38,7 +40,7 @@ public class Animal implements salable{
 
     @Override
     public String toString() {
-        return "main.Animal{" +
+        return "creatures.Animal{" +
                 "species='" + species + '\'' +
                 ", weight=" + weight +
                 '}';
@@ -58,6 +60,23 @@ public class Animal implements salable{
             }
         } else {
             System.out.println("To zwierzę nie jest twoje !!!");
+        }
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    @Override
+    public void feed(Double foodWeight) {
+        if(weight == 0){
+            System.out.println("Nie można karmić zwierzęcia które nie żyje");
+        } else {
+            this.weight += foodWeight;
         }
     }
 }

@@ -1,39 +1,28 @@
 package main;
 
-import devices.Car;
-import devices.Phone;
+import creatures.Animal;
+import creatures.FarmAnimal;
+import creatures.Pet;
 
 public class Main {
+
     public static void main(String[] args) {
-        Car car = new Car("Skoda", "Octavia", "1J8FFC7Y77D356964", 2000);
-        car.value = 500.0;
+        FarmAnimal farmAnimal = new FarmAnimal("Owca");
+        Pet pet = new Pet("Pies");
 
-        Phone phone = new Phone("Samsung", "A20", 2012);
+        System.out.println(farmAnimal.getWeight());
+        System.out.println(pet.getWeight());
 
-        Animal animal = new Animal("Kot");
+        farmAnimal.beEaten();
+        pet.feed(2.3);
 
-        Human seller = new Human();
-        seller.setSalary(1000.0);
-        Human buyer = new Human();
-        buyer.setSalary(1000.0);
+        System.out.println(farmAnimal.getWeight());
+        System.out.println(pet.getWeight());
 
-        car.sell(seller, buyer, 1000.0);
-        phone.sell(seller, buyer, 129.99);
-        animal.sell(seller, buyer, 580.0);
+        farmAnimal.feed();
+        pet.feed();
 
-        buyer.cash = 3000.0;
-        System.out.println(buyer.cash);
-        System.out.println(seller.cash);
-
-        seller.setCar(car);
-        seller.setPhone(phone);
-        seller.pet = animal;
-
-        car.sell(seller, buyer, 1000.0);
-        phone.sell(seller, buyer, 129.99);
-        animal.sell(seller, buyer, 580.0);
-
-        System.out.println(buyer.cash);
-        System.out.println(seller.cash);
+        System.out.println(farmAnimal.getWeight());
+        System.out.println(pet.getWeight());
     }
 }
