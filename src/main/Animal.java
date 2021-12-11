@@ -1,4 +1,8 @@
-public class Animal {
+package main;
+
+import interfaces.salable;
+
+public class Animal implements salable{
     public final String species;
     private Double weight;
 
@@ -34,9 +38,26 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Animal{" +
+        return "main.Animal{" +
                 "species='" + species + '\'' +
                 ", weight=" + weight +
                 '}';
+    }
+
+    @Override
+    public void sell(Human seller, Human buyer, Double price) {
+        if(seller.pet != null && seller.pet.equals(this)){
+            if(buyer.cash >= price){
+                seller.cash += price;
+                buyer.cash -= price;
+                buyer.pet = this;
+                seller.pet = null;
+                System.out.println("Zwierze " + this.species + " zostało kupione za " + price + " !!!");
+            } else {
+                System.out.println("Kupujący nie ma wystarczającej ilości pieniędzy by kupić zwierzę !!!");
+            }
+        } else {
+            System.out.println("To zwierzę nie jest twoje !!!");
+        }
     }
 }

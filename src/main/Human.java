@@ -1,4 +1,7 @@
+package main;
+
 import devices.Car;
+import devices.Phone;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -8,8 +11,10 @@ import java.util.Date;
 public class Human {
     public Animal pet;
     private Car car;
+    private Phone phone;
     private Double salary = 0.0;
     private String lastSalaryText = "";
+    public Double cash = 0.0;
 
     public Double getSalary(){
         if(lastSalaryText.equals("")){
@@ -43,7 +48,10 @@ public class Human {
     }
 
     public void setCar(Car car){
-        if(salary > car.value){
+        if(car == null){
+            this.car = null;
+        }
+        else if(salary > car.value){
             System.out.println("Twoje zarobki są wyższe niż wartość auta kupisz je za gotówkę");
             this.car = car;
         } else if(salary > (car.value/12)){
@@ -56,11 +64,19 @@ public class Human {
 
     @Override
     public String toString() {
-        return "Human{" +
+        return "main.Human{" +
                 "pet=" + pet +
                 ", car=" + car +
                 ", salary=" + salary +
                 ", lastSalaryText='" + lastSalaryText + '\'' +
                 '}';
+    }
+
+    public Phone getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Phone phone) {
+        this.phone = phone;
     }
 }

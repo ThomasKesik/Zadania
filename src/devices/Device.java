@@ -1,6 +1,8 @@
 package devices;
 
-public abstract class Device {
+import interfaces.salable;
+
+public abstract class Device implements salable{
 
     public final String producer;
     public final String model;
@@ -13,6 +15,7 @@ public abstract class Device {
     }
 
     public abstract void turnOn();
+
 
     @Override
     public String toString() {
