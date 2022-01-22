@@ -72,10 +72,13 @@ public class Human {
             System.out.println("Na tym miejscu stoi juz auto");
         } else {
             this.garage[position] = car;
+            if(car.transactionCount() == 0){
+                car.addOwner(this);
+            }
             System.out.println("Wstawiono auto " + car + " na pozycję " + position);
         }
-
     }
+
 
     public Double getCarsValue(){
         Double value = 0.0;

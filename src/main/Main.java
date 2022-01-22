@@ -22,41 +22,15 @@ public class Main {
         Human seller = new Human();
         Human buyer = new Human(5);
 
-        seller.setCar(carElectric, -1);
         seller.setCar(carElectric, 0);
         seller.setCar(carDiesel, 1);
-        seller.setCar(carLpg, 1);
         seller.setCar(carLpg, 2);
 
         System.out.println("Wartosc aut w garazu sprzedajacy: " + seller.getCarsValue());
         System.out.println("Wartosc aut w garazu kupujacy: " + buyer.getCarsValue());
-
-        seller.sortCars();
-        System.out.println(seller);
-
-        try {
-            carDiesel.sell(seller, buyer, 10000.0);
-        } catch (Exception e) {
-
-        }
+        System.out.println(carDiesel.getTransactions());
 
         buyer.cash = 100000.0;
-        seller.cash = 100000.0;
-
-        try {
-            carDiesel.sell(buyer, seller, 10000.0);
-        } catch (Exception e) {
-
-        }
-
-        Human buyer2 = new Human(0);
-        buyer2.cash = 1000000.0;
-
-        try {
-            carDiesel.sell(seller, buyer2, 10000.0);
-        } catch (Exception e) {
-
-        }
 
         try {
             carDiesel.sell(seller, buyer, 10000.0);
@@ -66,5 +40,16 @@ public class Main {
 
         System.out.println("Wartosc aut w garazu sprzedajacy: " + seller.getCarsValue());
         System.out.println("Wartosc aut w garazu kupujacy: " + buyer.getCarsValue());
+        carDiesel.printTransactions();
+
+        if(carDiesel.wasOwner(seller)){
+            System.out.println("Był właścicelem auta");
+        }
+
+        System.out.println("Ostatni właścicel auta " + carDiesel.getLastOwner());
+
+        if(carDiesel.transactionCheck(seller, buyer)){
+            System.out.println("Była taka transakcja");
+        }
     }
 }

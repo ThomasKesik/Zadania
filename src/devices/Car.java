@@ -5,11 +5,13 @@ import excaptions.NoCashForCarException;
 import excaptions.NoSpaceInGarageException;
 import main.Human;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class Car extends Device {
 
     public final String VIN;
+    private ArrayList<Transaction> transactions = new ArrayList<>();
 
     public Car(String producer, String model, String VIN,  Integer yearOfProduction) {
         super(producer, model, yearOfProduction);
@@ -58,7 +60,7 @@ public abstract class Car extends Device {
                 break;
             }
         }
-        if(sellerCarPosition == -1){
+        if(sellerCarPosition == -1 || !this.getLastOwner().equals(seller)){
             throw new NoCarInGarageException();
         }
 
@@ -77,10 +79,56 @@ public abstract class Car extends Device {
         buyer.cash -= price;
         buyer.setCar(this, buyerFirstFreeSpace);
         seller.setCar(null, sellerCarPosition);
+        Transaction transaction = new Transaction(seller, buyer, price);
+        transactions.add(transaction);
         System.out.println("Auto " + this.producer + " " + this.model + " zostało kupione za " + price + " !!!");
     }
 
+    public void addOwner(Human human) {
+        Transaction transaction = new Transaction(null, human, 0.0);
+        transactions.add(transaction);
+    }
 
+    public Human getLastOwner(){
+        Transaction lastTransaction = transactions.get(transactions.size()-1);
+        return lastTransaction.getBuyer();
+    }
+
+    public boolean wasOwner(Human human){
+        for(Transaction transaction: transactions){
+            if(transaction.getBuyer().equals(human)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean transactionCheck(Human seller, Human buyer){
+        for(Transaction transaction: transactions){
+            if(transaction.getSeller() == null || transaction.getBuyer() == null){
+                continue;
+            }
+            if(transaction.getSeller().equals(seller) && transaction.getBuyer().equals(buyer)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int transactionCount(){
+        return transactions.size();
+    }
+
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void printTransactions(){
+        for (Transaction transaction: transactions){
+            System.out.println(transaction);
+            System.out.println();
+        }
+    }
 
     public abstract void refuel();
 }
