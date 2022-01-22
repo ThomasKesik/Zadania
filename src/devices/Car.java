@@ -4,7 +4,7 @@ import main.Human;
 
 import java.util.Objects;
 
-public class Car extends Device {
+public abstract class Car extends Device {
 
     public final String VIN;
     public Double value;
@@ -59,4 +59,6 @@ public class Car extends Device {
             System.out.println("To auto nie jest twoje !!!");
         }
     }
+
+    public abstract void refuel();
 }
