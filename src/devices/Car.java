@@ -1,5 +1,8 @@
 package devices;
 
+import excaptions.NoCarInGarageException;
+import excaptions.NoCashForCarException;
+import excaptions.NoSpaceInGarageException;
 import main.Human;
 
 import java.util.Objects;
@@ -7,7 +10,6 @@ import java.util.Objects;
 public abstract class Car extends Device {
 
     public final String VIN;
-    public Double value;
 
     public Car(String producer, String model, String VIN,  Integer yearOfProduction) {
         super(producer, model, yearOfProduction);
@@ -44,21 +46,41 @@ public abstract class Car extends Device {
     }
 
     @Override
-    public void sell(Human seller, Human buyer, Double price) {
-        if(seller.getCar() != null && seller.getCar().equals(this)){
-            if(buyer.cash >= price){
-                seller.cash += price;
-                buyer.cash -= price;
-                buyer.setCar(this);
-                seller.setCar(null);
-                System.out.println("Auto " + this.producer + " " + this.model + " zostało kupione za " + price + " !!!");
-            } else {
-                System.out.println("Kupujący nie ma wystarczającej ilości pieniędzy by kupić auto !!!");
-            }
-        } else {
-            System.out.println("To auto nie jest twoje !!!");
+    public void sell(Human seller, Human buyer, Double price) throws NoCarInGarageException, NoCashForCarException, NoSpaceInGarageException {
+        if(buyer.cash < price){
+            throw new NoCashForCarException();
         }
+        int sellerCarPosition = -1;
+        Car [] sellerCars = seller.getGarage();
+        for(int i = 0; i < sellerCars.length; i++){
+            if(sellerCars[i] != null && sellerCars[i].equals(this)){
+                sellerCarPosition = i;
+                break;
+            }
+        }
+        if(sellerCarPosition == -1){
+            throw new NoCarInGarageException();
+        }
+
+        int buyerFirstFreeSpace = -1;
+        Car [] buyerCars = buyer.getGarage();
+        for(int i = 0; i < buyerCars.length; i++){
+            if(buyerCars[i] == null){
+                buyerFirstFreeSpace = i;
+                break;
+            }
+        }
+        if(buyerFirstFreeSpace == -1){
+            throw new NoSpaceInGarageException();
+        }
+        seller.cash += price;
+        buyer.cash -= price;
+        buyer.setCar(this, buyerFirstFreeSpace);
+        seller.setCar(null, sellerCarPosition);
+        System.out.println("Auto " + this.producer + " " + this.model + " zostało kupione za " + price + " !!!");
     }
+
+
 
     public abstract void refuel();
 }

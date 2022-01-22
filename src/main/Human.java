@@ -6,16 +6,23 @@ import devices.Phone;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 public class Human {
     public Animal pet;
-    private Car car;
+    private Car [] garage;
     private Phone phone;
     private Double salary = 0.0;
     private String lastSalaryText = "";
     public Double cash = 0.0;
+
+    public Human() {
+        this.garage = new Car[3];
+    }
+
+    public Human(Integer garageSize) {
+        this.garage = new Car[garageSize];
+    }
 
     public Double getSalary(){
         if(lastSalaryText.equals("")){
@@ -44,32 +51,77 @@ public class Human {
         }
     }
 
-    public Car getCar(){
-        return this.car;
+    public Car getCar(int position){
+        if(garage.length <= position){
+            System.out.println("Nie ma takiego miejsca w garazu");
+            return null;
+        }
+        Car car = this.garage[position];
+        if(car != null){
+            System.out.println("Auto: " + car);
+        } else {
+            System.out.println("To miejsce jest puste");
+        }
+        return car;
     }
 
-    public void setCar(Car car){
-        if(car == null){
-            this.car = null;
-        }
-        else if(salary > car.value){
-            System.out.println("Twoje zarobki są wyższe niż wartość auta kupisz je za gotówkę");
-            this.car = car;
-        } else if(salary > (car.value/12)){
-            System.out.println("Uda ci się kupić auto na kredyt (no trudno)");
-            this.car = car;
+    public void setCar(Car car, int position){
+        if(position < 0 || garage.length <= position){
+            System.out.println("Nie ma takiego miejsca w garazu");
+        } else if(garage[position] != null){
+            System.out.println("Na tym miejscu stoi juz auto");
         } else {
-            System.out.println("Zapisz się na studia i znajdź nową robotę albo idź po podwyżkę");
+            this.garage[position] = car;
+            System.out.println("Wstawiono auto " + car + " na pozycję " + position);
         }
+
+    }
+
+    public Double getCarsValue(){
+        Double value = 0.0;
+        for (Car car: this.garage){
+            if(car != null && car.value != null){
+                value += car.value;
+            }
+        }
+        return value;
+    }
+
+    public void sortCars(){
+        ArrayList<Car> sortedCars = new ArrayList<>();
+        for(Car car: garage){
+            if(car != null){
+                sortedCars.add(car);
+            }
+        }
+        sortedCars.sort(new Comparator<Car>() {
+            @Override
+            public int compare(Car c1, Car c2) {
+                return c1.yearOfProduction - c2.yearOfProduction;
+            }
+        });
+        for (int i = 0; i < garage.length; i++){
+            if(sortedCars.size() > i){
+                garage[i] = sortedCars.get(i);
+            } else {
+                garage[i] = null;
+            }
+        }
+    }
+
+    public Car[] getGarage() {
+        return garage;
     }
 
     @Override
     public String toString() {
-        return "main.Human{" +
+        return "Human{" +
                 "pet=" + pet +
-                ", car=" + car +
+                ", garage=" + Arrays.toString(garage) +
+                ", phone=" + phone +
                 ", salary=" + salary +
                 ", lastSalaryText='" + lastSalaryText + '\'' +
+                ", cash=" + cash +
                 '}';
     }
 
