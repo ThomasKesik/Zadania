@@ -1,55 +1,41 @@
 package main;
 
 import devices.*;
-import excaptions.NoCarInGarageException;
-import excaptions.NoCashForCarException;
-import excaptions.NoSpaceInGarageException;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
-        Car carElectric = new Electric("Tesla", "Elon", "123", 2022);
-        carElectric.value = 100000.0;
-        Car carDiesel = new Diesel("Skoda", "Octavia", "213", 2000);
-        carDiesel.value = 20000.0;
-        Car carLpg = new LPG("Ford", "Mondeo", "321", 2010);
-        carLpg.value = 38000.0;
+        Human human = new Human();
+        Phone phone = new Phone("Samsung", "Galaxy", 2022);
+        human.setPhone(phone);
+        Application application1 = new Application("Saper", "1.0", 12.5);
+        Application application2 = new Application("AngryBirds", "1.2", 1.0);
+        Application application3 = new Application("Racer", "0.22", 0.0);
+        Application application4 = new Application("BF2024", "1.0", 0.0);
 
-        Human seller = new Human();
-        Human buyer = new Human(5);
+        phone.installAnApp(human, application1);
+        human.cash = 100.0;
+        phone.installAnApp(human, application1);
+        phone.installAnApp(human, application2);
+        phone.installAnApp(human, application3);
+        phone.installAnApp(human, application4);
 
-        seller.setCar(carElectric, 0);
-        seller.setCar(carDiesel, 1);
-        seller.setCar(carLpg, 2);
-
-        System.out.println("Wartosc aut w garazu sprzedajacy: " + seller.getCarsValue());
-        System.out.println("Wartosc aut w garazu kupujacy: " + buyer.getCarsValue());
-        System.out.println(carDiesel.getTransactions());
-
-        buyer.cash = 100000.0;
-
-        try {
-            carDiesel.sell(seller, buyer, 10000.0);
-        } catch (Exception e) {
-
+        if(phone.isApplicationInstalled(application1)){
+            System.out.println("Aplikacja " + application1 + " jest zainstalowana");
         }
 
-        System.out.println("Wartosc aut w garazu sprzedajacy: " + seller.getCarsValue());
-        System.out.println("Wartosc aut w garazu kupujacy: " + buyer.getCarsValue());
-        carDiesel.printTransactions();
-
-        if(carDiesel.wasOwner(seller)){
-            System.out.println("Był właścicelem auta");
+        if(phone.isApplicationInstalled("Racer")){
+            System.out.println("Aplikacja Racer jest zainstalowana");
         }
 
-        System.out.println("Ostatni właścicel auta " + carDiesel.getLastOwner());
-
-        if(carDiesel.transactionCheck(seller, buyer)){
-            System.out.println("Była taka transakcja");
-        }
+        phone.printFreeApps();
+        System.out.println();
+        System.out.println("Wartość zainstalowanych aplikacji: " + phone.getAppsValue());
+        System.out.println();
+        phone.printAppsSortedByNames();
+        System.out.println();
+        phone.printAppsSortedByPrice();
+        
     }
 }
